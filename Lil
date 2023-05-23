@@ -1,20 +1,37 @@
-
-
 import java.util.Scanner;
 
 public class Calculator {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите выражение (например, 2 + 3): ");
-        String input = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Введите выражение без пробелов и нажмите Enter (например: 2+3): ");
+        String input = sc.nextLine();
+
+        // Проверяем, есть ли корректное количество символов в строке
+        if (input.length() != 3) {
+            System.out.println("Ошибка: выражение должно содержать два операнда со сзначениями от 0 до 10.");
+            System.exit(0);
+        }
+
+        char operand = input.charAt(1);
+
+        // Проверяем, является ли символ оператором
+        if (operand != '+' && operand != '-' && operand != '*' && operand != '/') {
+            System.out.println("Ошибка: неверный оператор.");
+            System.exit(0);
+        }
+
+        int num1 = Character.getNumericValue(input.charAt(0));
+        int num2 = Character.getNumericValue(input.charAt(2));
+
+        // Проверяем, являются ли операнды цифрами от 0 до 10
+        if (num1 < 0 || num1 > 10 || num2 < 0 || num2 > 10) {
+            System.out.println("Ошибка: операнды должны быть цифрами от 0 до 10.");
+            System.exit(0);
+        }
 
         int result = 0;
-        String[] parts = input.split(" ");
-        int num1 = Integer.parseInt(parts[0]);
-        char operator = parts[1].charAt(0);
-        int num2 = Integer.parseInt(parts[2]);
-
-        switch (operator) {
+        switch(operand) {
             case '+':
                 result = num1 + num2;
                 break;
@@ -27,12 +44,8 @@ public class Calculator {
             case '/':
                 result = num1 / num2;
                 break;
-            default:
-                System.out.println("Некорректный оператор");
-                return;
         }
 
         System.out.println("Результат: " + result);
     }
 }
- 
